@@ -1,0 +1,247 @@
+---
+const services = [
+  {
+    icon: "🏛️",
+    title: "Management Services",
+    subtitle: "Administrative Excellence",
+    color: "#6C0302",
+    items: [
+      "Annual meeting & election documents",
+      "Board meeting attendance & minute taking",
+      "Common area inspections",
+      "Compliance & governing document enforcement",
+      "Contract negotiations & vendor management",
+      "Hurricane preparedness",
+      "Property inspections",
+      "Rule enforcement & violations reports",
+    ],
+    description:
+      "Highly trained Visionary managers make it their priority to ensure the smooth day-to-day functioning of your community.",
+    featured: true,
+  },
+  {
+    icon: "📊",
+    title: "Bookkeeping",
+    subtitle: "Financial Transparency",
+    color: "#3d0101",
+    items: [
+      "Assessment collection & ACH payments",
+      "Budget preparation & reserve transfers",
+      "Financial report preparation",
+      "Accounts payable & receivable",
+      "Delinquency statements & demand letters",
+      "Lien facilitation & CPA communication",
+    ],
+    description:
+      "Industry-leading, transparent bookkeeping service that identifies inefficiencies and maximizes your community's financial health.",
+    featured: false,
+  },
+  {
+    icon: "🔧",
+    title: "Maintenance Services",
+    subtitle: "Community Upkeep",
+    color: "#2a1010",
+    items: [
+      "Common area & pool cleaning",
+      "General handyman services",
+      "Pest control",
+      "Hurricane preparation & cleanup",
+      "Pressure washing & deck cleaning",
+      "Light bulb replacement & lighting checks",
+    ],
+    description:
+      "Top-notch maintenance services that keep your community looking its best and maintaining property values.",
+    featured: false,
+  },
+  {
+    icon: "🌐",
+    title: "Website Services",
+    subtitle: "Digital Community Hub",
+    color: "#1a1a1a",
+    items: [
+      "Community-specific website creation",
+      "Password-protected board & homeowner portals",
+      "Events calendar & community bulletins",
+      "Online homeowners forum",
+      "Financial reports & governing documents access",
+      "Clubhouse reservations",
+    ],
+    description:
+      "Showcase your community at its best with a professional, resource-rich website that connects residents.",
+    featured: false,
+  },
+];
+---
+
+<section id="services" class="py-24" style="background: white;">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <span
+        class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
+        style="background: rgba(108,3,2,0.08); color: #6C0302;"
+      >
+        Our Services
+      </span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #1a1a1a;">
+        Everything your community<br />
+        <span style="color: #6C0302;">needs to thrive</span>
+      </h2>
+      <p class="text-lg max-w-2xl mx-auto" style="color: #666;">
+        Visionary recognizes that there is no "one size fits all." All of our
+        services are fully customized to meet the unique specifications of your
+        community.
+      </p>
+    </div>
+
+    <!-- Bento Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Featured large card -->
+      <div
+        class="lg:col-span-2 rounded-3xl p-8 text-white relative overflow-hidden group"
+        style="background: linear-gradient(135deg, #6C0302 0%, #3d0101 100%);"
+      >
+        <!-- Background pattern -->
+        <div
+          class="absolute inset-0 opacity-5"
+          style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"
+        >
+        </div>
+        <div class="relative z-10">
+          <div class="flex items-start justify-between mb-6">
+            <div>
+              <span class="text-4xl mb-3 block">{services[0].icon}</span>
+              <span
+                class="text-xs font-semibold uppercase tracking-widest opacity-70"
+                >{services[0].subtitle}</span
+              >
+              <h3 class="text-2xl font-bold mt-1">{services[0].title}</h3>
+            </div>
+            <span
+              class="px-3 py-1.5 rounded-full text-xs font-bold"
+              style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3);"
+            >
+              Core Service
+            </span>
+          </div>
+          <p class="text-white/80 text-sm mb-6">{services[0].description}</p>
+          <div class="grid grid-cols-2 gap-2">
+            {
+              services[0].items.map((item) => (
+                <div class="flex items-center gap-2 text-sm text-white/80">
+                  <span
+                    class="w-1.5 h-1.5 rounded-full shrink-0"
+                    style="background: rgba(255,255,255,0.6);"
+                  />
+                  {item}
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div class="flex flex-col gap-6">
+        {
+          services.slice(1, 3).map((service) => (
+            <div
+              class="rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
+              style="background: #f5f5f5; border-color: rgba(108,3,2,0.08);"
+            >
+              <span class="text-3xl mb-3 block">{service.icon}</span>
+              <span
+                class="text-xs font-semibold uppercase tracking-widest"
+                style="color: #6C0302;"
+              >
+                {service.subtitle}
+              </span>
+              <h3
+                class="text-lg font-bold mb-2 mt-1"
+                style="color: #1a1a1a; font-family: 'Inter', sans-serif;"
+              >
+                {service.title}
+              </h3>
+              <p class="text-sm mb-4" style="color: #888;">
+                {service.description}
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                {service.items.slice(0, 3).map((item) => (
+                  <span
+                    class="text-xs px-2.5 py-1 rounded-full font-medium"
+                    style="background: rgba(108,3,2,0.08); color: #6C0302;"
+                  >
+                    {item}
+                  </span>
+                ))}
+                <span
+                  class="text-xs px-2.5 py-1 rounded-full font-medium"
+                  style="background: rgba(0,0,0,0.05); color: #999;"
+                >
+                  +{service.items.length - 3} more
+                </span>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      <!-- Bottom full-width card — Website Services -->
+      <div
+        class="lg:col-span-3 rounded-3xl p-8 border transition-all duration-300 hover:shadow-lg"
+        style="background: linear-gradient(135deg, #1a1a1a 0%, #2a0101 100%); border-color: rgba(108,3,2,0.2);"
+      >
+        <div
+          class="flex flex-col md:flex-row items-start md:items-center gap-6"
+        >
+          <div class="shrink-0">
+            <span class="text-4xl">{services[3].icon}</span>
+          </div>
+          <div class="flex-1">
+            <span
+              class="text-xs font-semibold uppercase tracking-widest"
+              style="color: #e05252;">{services[3].subtitle}</span
+            >
+            <h3
+              class="text-xl font-bold mb-2 mt-1 text-white"
+              style="font-family: 'Inter', sans-serif;"
+            >
+              {services[3].title}
+            </h3>
+            <p class="text-sm" style="color: rgba(255,255,255,0.6);">
+              {services[3].description}
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2 md:max-w-sm">
+            {
+              services[3].items.map((item) => (
+                <span
+                  class="text-xs px-3 py-1.5 rounded-full font-medium"
+                  style="background: rgba(108,3,2,0.3); color: #ffe4e4;"
+                >
+                  {item}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-12">
+      <p class="text-sm mb-4" style="color: #888;">
+        All services are fully customizable to your community's needs.
+      </p>
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm border-2 transition-all duration-300 hover:text-white!"
+        style="border-color: #6C0302; color: #6C0302;"
+        onmouseover="this.style.background='#6C0302'"
+        onmouseout="this.style.background='transparent'"
+      >
+        Request a Custom Proposal →
+      </a>
+    </div>
+  </div>
+</section>

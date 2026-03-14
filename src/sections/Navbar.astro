@@ -1,0 +1,156 @@
+---
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Technology", href: "#technology" },
+  { label: "Contact", href: "#contact" },
+];
+---
+
+<nav
+  id="navbar"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+>
+  <div
+    class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+  >
+    <!-- Logo -->
+    <a href="#home" class="flex items-center gap-3 group">
+      <div
+        class="w-10 h-10 rounded-lg flex items-center justify-center shadow-md transition-transform duration-300 group-hover:scale-105"
+        style="background: #6C0302;"
+      >
+        <span class="text-white font-black text-lg leading-none">V</span>
+      </div>
+      <div class="flex flex-col leading-tight">
+        <span class="font-black text-white text-base tracking-wide"
+          >Visionary</span
+        >
+        <span class="text-xs font-medium" style="color: rgba(255,255,255,0.7);"
+          >Property Management of Florida</span
+        >
+      </div>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="hidden md:flex items-center gap-8 list-none">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="text-md lg:text-lg font-medium transition-all duration-200 hover:opacity-100 relative nav-link"
+              style="color: rgba(255,255,255,0.85);"
+            >
+              {link.label}
+              <span
+                class="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-300 nav-underline"
+                style="background: #6C0302;"
+              />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- CTA Button -->
+    <div class="hidden md:flex items-center gap-4">
+      <a
+        href="#contact"
+        class="px-5 py-2.5 rounded-md text-sm font-semibold border-2 border-white text-white transition-all duration-200 hover:bg-white hover:text-[#6C0302]"
+      >
+        Portal Access
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="menu-btn"
+      class="md:hidden flex flex-col gap-1.5 p-2"
+      aria-label="Open menu"
+    >
+      <span
+        class="w-6 h-0.5 bg-white block transition-all duration-300"
+        id="bar1"></span>
+      <span
+        class="w-6 h-0.5 bg-white block transition-all duration-300"
+        id="bar2"></span>
+      <span
+        class="w-6 h-0.5 bg-white block transition-all duration-300"
+        id="bar3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden px-6 pb-4 pt-2"
+    style="background: #1a1a1a;"
+  >
+    <ul class="flex flex-col gap-3 list-none">
+      {
+        navLinks.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="block text-white font-medium text-lg py-2 border-b border-white/10 hover:text-red-300 transition-colors"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="pt-2">
+        <a
+          href="#contact"
+          class="block text-center px-4 py-2.5 rounded-full text-sm font-semibold border-2 border-white text-white hover:bg-white hover:text-[#6C0302] transition-all"
+        >
+          Portal Access
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const navbar = document.getElementById("navbar")!;
+  const menuBtn = document.getElementById("menu-btn")!;
+  const mobileMenu = document.getElementById("mobile-menu")!;
+
+  // Scroll effect — switch from transparent to solid dark
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 50) {
+      navbar.style.background = "rgba(15,15,15,0.97)";
+      navbar.style.boxShadow = "0 4px 30px rgba(0,0,0,0.5)";
+      navbar.style.backdropFilter = "blur(10px)";
+    } else {
+      navbar.style.background = "transparent";
+      navbar.style.boxShadow = "none";
+      navbar.style.backdropFilter = "none";
+    }
+  });
+
+  // Mobile menu toggle
+  menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  // Close mobile menu on link click
+  mobileMenu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+    });
+  });
+
+  // Nav link hover underline effect
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    const underline = link.querySelector(".nav-underline") as HTMLElement;
+    link.addEventListener("mouseenter", () => {
+      if (underline) underline.style.width = "100%";
+    });
+    link.addEventListener("mouseleave", () => {
+      if (underline) underline.style.width = "0%";
+    });
+  });
+</script>

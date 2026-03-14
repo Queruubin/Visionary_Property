@@ -1,0 +1,101 @@
+---
+const values = [
+  {
+    icon: "🌐",
+    title: "Holistic Approach",
+    description:
+      "We provide comprehensive, end-to-end management for every aspect of your community — from administrative tasks to financial oversight and physical maintenance.",
+  },
+  {
+    icon: "⚖️",
+    title: "Founded by Experts",
+    description:
+      "Our leadership team consists of Florida-licensed attorneys and international real estate veterans, bringing unmatched legal and industry expertise to every community.",
+  },
+  {
+    icon: "🎯",
+    title: "Tailored for You",
+    description:
+      'There is no "one size fits all" at Visionary. Every service is fully customized to meet the unique specifications, goals, and character of your community.',
+  },
+];
+---
+
+<section id="about" class="py-24" style="background: #f5f5f5;">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <span
+        class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
+        style="background: rgba(108,3,2,0.08); color: #6C0302;"
+      >
+        Why Choose Visionary?
+      </span>
+      <h2
+        class="text-4xl md:text-5xl font-bold mb-4"
+        style="color: #1a1a1a;"
+      >
+        Supporting the goals of<br />
+        <span style="color: #6C0302;">your community</span>
+      </h2>
+      <p class="text-lg max-w-2xl mx-auto" style="color: #666;">
+        When you choose your next management company, you should rest easy
+        knowing you have a reliable partner who understands your needs,
+        anticipates issues, and has a track record of finding reliable
+        solutions.
+      </p>
+    </div>
+
+    <!-- Value cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {
+        values.map((v, i) => (
+          <div
+            class="rounded-3xl p-8 border transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group"
+            style="background: white; border-color: rgba(108,3,2,0.08);"
+          >
+            <div
+              class="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-6 transition-transform duration-300 group-hover:scale-110"
+              style={`background: ${i === 1 ? "#6C0302" : "rgba(108,3,2,0.08)"}; transform-origin: center;`}
+            >
+              {v.icon}
+            </div>
+            <h3
+              class="text-xl font-bold mb-3"
+              style="color: #1a1a1a; font-family: 'Inter', sans-serif;"
+            >
+              {v.title}
+            </h3>
+            <p class="text-sm leading-relaxed" style="color: #666;">
+              {v.description}
+            </p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Empowering banner -->
+    <div
+      class="mt-16 rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between gap-8"
+      style="background: linear-gradient(135deg, #1a1a1a 0%, #2d0101 100%);"
+    >
+      <div>
+        <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">
+          Empowering our communities!
+        </h3>
+        <p class="text-white/70 text-sm max-w-lg">
+          Visionary Property Management of Florida will partner with you to
+          resolve challenges, improve operations, and help your community
+          thrive.
+        </p>
+      </div>
+      <a
+        href="#contact"
+        class="shrink-0 px-7 py-3.5 rounded-full font-bold text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg"
+        style="background: #6C0302; color: white;"
+      >
+        Partner With Us Today
+      </a>
+    </div>
+  </div>
+</section>

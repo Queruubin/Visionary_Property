@@ -1,0 +1,138 @@
+---
+const painPoints = [
+  {
+    problem:
+      "Is your current management company taking weeks to fix a light bulb in the clubhouse or repair equipment in the gym?",
+    solution:
+      "Visionary offers industry-breaking response times. We promptly and professionally respond to all maintenance requests.",
+    icon: "⚡",
+  },
+  {
+    problem:
+      "Are you experiencing poor communication — waiting days before getting a response to your phone call or email?",
+    solution:
+      "Visionary provides rapid, multi-channel communication. We anticipate your needs and keep you informed at every step.",
+    icon: "📞",
+  },
+  {
+    problem:
+      "Does your current company's technology leave you in the dark ages with no access to financials or real-time reports?",
+    solution:
+      "Visionary's cutting-edge digital platform gives you real-time access to financials, meeting minutes, and community documents.",
+    icon: "💡",
+  },
+];
+---
+
+<section class="py-24" style="background: #f5f5f5;">
+  <div class="max-w-7xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-16">
+      <span
+        class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
+        style="background: rgba(108,3,2,0.1); color: #6C0302;"
+      >
+        We Solve Your Problems
+      </span>
+      <h2
+        class="text-4xl md:text-5xl font-bold mb-4"
+        style="color: #1a1a1a;"
+      >
+        Sound familiar?<br />
+      </h2>
+      <p class="text-lg max-w-xl mx-auto" style="color: #666;">
+        <span style="color: #6C0302;" class="font-bold">Visionary</span>
+        understands the frustrations of poor association management.
+        That's exactly why we built Visionary.
+      </p>
+    </div>
+
+    <!-- Pain point cards -->
+    <div class="flex flex-col gap-6">
+      {
+        painPoints.map((point, i) => (
+          <div
+            class="rounded-3xl overflow-hidden border flex flex-col md:flex-row"
+            style="border-color: rgba(108,3,2,0.1);"
+          >
+            <!-- Problem side -->
+            <div
+              class="flex-1 p-8 flex gap-5 items-start"
+              style="background: white;"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-xl"
+                style="background: rgba(220,50,50,0.08);"
+              >
+                ❌
+              </div>
+              <div>
+                <span class="text-xs font-bold uppercase tracking-widest text-red-400 mb-2 block">
+                  The Problem
+                </span>
+                <p
+                  class="font-medium leading-relaxed"
+                  style="color: #1a1a1a;"
+                >
+                  {point.problem}
+                </p>
+              </div>
+            </div>
+
+            <!-- Arrow -->
+            <div
+              class="flex items-center justify-center px-4 py-4 md:py-0"
+              style="background: rgba(108,3,2,0.05);"
+            >
+              <span class="text-2xl hidden md:block" style="color: #6C0302;"
+                >→</span
+              >
+              <span class="text-2xl md:hidden" style="color: #6C0302;">↓</span>
+            </div>
+
+            <!-- Solution side -->
+            <div
+              class="flex-1 p-8 flex gap-5 items-start"
+              style="background: linear-gradient(135deg, rgba(108,3,2,0.04) 0%, rgba(108,3,2,0.07) 100%);"
+            >
+              <div
+                class="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-xl"
+                style="background: rgba(108,3,2,0.1);"
+              >
+                {point.icon}
+              </div>
+              <div>
+                <span
+                  class="text-xs font-bold uppercase tracking-widest mb-2 block"
+                  style="color: #6C0302;"
+                >
+                  Visionary Solution
+                </span>
+                <p
+                  class="font-medium leading-relaxed"
+                  style="color: #1a1a1a;"
+                >
+                  {point.solution}
+                </p>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-12">
+      <p class="font-semibold text-lg mb-4" style="color: #6C0302;">
+        Visionary Property Management will partner with you & resolve this!
+      </p>
+      <a
+        href="#contact"
+        class="inline-block px-8 py-4 rounded-full font-bold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
+        style="background: linear-gradient(135deg, #6C0302 0%, #8a0403 100%);"
+      >
+        Get a Free Consultation
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,74 @@
+---
+const partnerTypes = [
+  { icon: "🏠", label: "Alarm & Home Protection Specialists" },
+  { icon: "💰", label: "Financial Service Providers" },
+  { icon: "🔨", label: "General Contractors" },
+  { icon: "🛡️", label: "Insurance Brokers" },
+  { icon: "💧", label: "Irrigation Specialists" },
+  { icon: "🌿", label: "Landscapers" },
+  { icon: "🏊", label: "Pool Maintenance Companies" },
+  { icon: "🏡", label: "Real Estate Brokers" },
+  { icon: "🔒", label: "Security Companies" },
+  { icon: "🚗", label: "Towing Companies" },
+];
+---
+
+<section class="py-16" style="background: #f5f5f5;">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <span
+        class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
+        style="background: rgba(108,3,2,0.08); color: #6C0302;"
+      >
+        Visionary Partnerships
+      </span>
+      <h2
+        class="text-3xl md:text-4xl font-bold mb-4"
+        style="color: #1a1a1a;"
+      >
+        Our strength comes from<br />
+        <span style="color: #6C0302;">strategic partnerships</span>
+      </h2>
+      <p class="text-base max-w-xl mx-auto" style="color: #666;">
+        Creating partnerships is where we start — working together is what makes your community a success.
+      </p>
+    </div>
+
+    <!-- Partner chips -->
+    <div class="flex flex-wrap gap-3 justify-center">
+      {
+        partnerTypes.map((partner) => (
+          <div
+            class="flex items-center gap-2.5 px-5 py-3 rounded-full border transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-default"
+            style="background: white; border-color: rgba(108,3,2,0.1);"
+          >
+            <span class="text-xl">{partner.icon}</span>
+            <span class="text-sm font-medium" style="color: #1a1a1a;">
+              {partner.label}
+            </span>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Formula badge -->
+    <div class="text-center mt-12">
+      <div
+        class="inline-flex items-center gap-4 px-8 py-4 rounded-2xl border"
+        style="background: white; border-color: rgba(108,3,2,0.1);"
+      >
+        <span class="text-sm font-bold" style="color: #6C0302;">Partners</span>
+        <span style="color: #1a1a1a; font-weight: 700;">+</span>
+        <span class="text-sm font-bold" style="color: #6C0302;">Technology</span>
+        <span style="color: #1a1a1a; font-weight: 700;">+</span>
+        <span class="text-sm font-bold" style="color: #6C0302;"
+          >Customer Service</span
+        >
+        <span style="color: #1a1a1a; font-weight: 700;">=</span>
+        <span class="text-sm font-black" style="color: #6C0302;"
+          >Community Excellence</span
+        >
+      </div>
+    </div>
+  </div>
+</section>
