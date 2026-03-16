@@ -26,16 +26,13 @@ const leaders = [
     <div class="text-center mb-16">
       <span
         class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
-        style="background: rgba(108,3,2,0.08); color: #6C0302;"
+        style="background: rgba(139,4,4,0.08); color: #8B0404;"
       >
         Meet Our Leadership
       </span>
-      <h2
-        class="text-4xl md:text-5xl font-bold mb-4"
-        style="color: #1a1a1a;"
-      >
+      <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #2a2a2a;">
         Expert you can<br />
-        <span style="color: #6C0302;">trust with your community</span>
+        <span style="color: #8B0404;">trust with your community</span>
       </h2>
       <p class="text-lg max-w-2xl mx-auto" style="color: #666;">
         Visionary was founded by an attorney and real estate professional with decades
@@ -43,23 +40,23 @@ const leaders = [
       </p>
     </div>
 
-    <!-- Leader card — centered, single card -->
+    <!-- Leader card -->
     {
       leaders.map((leader) => (
         <div
           class="rounded-3xl overflow-hidden border shadow-lg"
-          style="border-color: rgba(108,3,2,0.1);"
+          style="border-color: rgba(139,4,4,0.1);"
         >
           <!-- Card header -->
           <div
             class="p-8 text-white relative overflow-hidden"
-            style="background: linear-gradient(135deg, #6C0302 0%, #3d0101 100%);"
+            style="background: linear-gradient(135deg, #8B0404 0%, #5a0202 100%);"
           >
             <div
               class="absolute inset-0 opacity-5"
               style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"
             />
-            <div class="relative z-10 flex items-center gap-5">
+            <div class="relative z-10 flex items-center gap-6">
               <div
                 class="w-20 h-20 rounded-2xl flex items-center justify-center text-2xl font-black border-2 border-white/30"
                 style="background: rgba(255,255,255,0.12);"
@@ -68,8 +65,8 @@ const leaders = [
               </div>
               <div>
                 <h3 class="text-2xl font-bold">{leader.name}</h3>
-                <p class="text-white/70 font-medium mt-1">{leader.role}</p>
-                <p class="text-white/50 text-xs mt-1">
+                <p class="font-medium mt-1" style="color: #c0a88c;">{leader.role}</p>
+                <p class="text-xs mt-1" style="color: rgba(255,255,255,0.5);">
                   Visionary Property Management of Florida
                 </p>
               </div>
@@ -84,7 +81,7 @@ const leaders = [
               </p>
               <blockquote
                 class="text-sm italic leading-relaxed p-4 rounded-2xl"
-                style="background: rgba(108,3,2,0.05); border-left: 3px solid #6C0302; color: #555;"
+                style="background: rgba(164,137,108,0.08); border-left: 3px solid #A4896C; color: #555;"
               >
                 "{leader.quote}"
               </blockquote>
@@ -93,19 +90,16 @@ const leaders = [
             <div>
               <h4
                 class="text-xs font-bold uppercase tracking-widest mb-4"
-                style="color: #6C0302;"
+                style="color: #8B0404;"
               >
                 Key Credentials
               </h4>
               <ul class="space-y-2.5">
                 {leader.highlights.map((h) => (
-                  <li
-                    class="flex items-start gap-2.5 text-sm"
-                    style="color: #1a1a1a;"
-                  >
+                  <li class="flex items-start gap-2.5 text-sm" style="color: #2a2a2a;">
                     <span
                       class="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0"
-                      style="background: #6C0302;"
+                      style="background: #A4896C;"
                     />
                     {h}
                   </li>

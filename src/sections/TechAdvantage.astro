@@ -42,37 +42,37 @@ const techFeatures = [
 <section
   id="technology"
   class="py-24 relative overflow-hidden"
-  style="background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 60%, #2d0101 100%);"
+  style="background: linear-gradient(135deg, #1e1e1e 0%, #252525 60%, #3d1212 100%);"
 >
   <!-- BG texture -->
   <div
     class="absolute inset-0 opacity-5"
     style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 40px 40px;"
-  >
-  </div>
+  ></div>
 
-  <!-- Red glow orb -->
+  <!-- Dual glow orbs -->
   <div
     class="absolute -top-20 -right-20 w-96 h-96 rounded-full blur-3xl opacity-20"
-    style="background: #6C0302;"
-  >
-  </div>
+    style="background: #8B0404;"
+  ></div>
+  <div
+    class="absolute bottom-10 left-10 w-64 h-64 rounded-full blur-3xl opacity-10"
+    style="background: #A4896C;"
+  ></div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-6">
     <!-- Header -->
-    <div
-      class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8"
-    >
+    <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
       <div>
         <span
           class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
-          style="background: rgba(108,3,2,0.25); color: #e05252;"
+          style="background: rgba(139,4,4,0.25); color: #c97a7a;"
         >
           The Visionary Technological Advantage
         </span>
         <h2 class="text-4xl md:text-5xl font-bold text-white leading-tight">
           Tech-enabled<br />
-          <span style="color: #e05252;">communities</span>
+          <span style="color: #c97a7a;">communities</span>
         </h2>
       </div>
       <p class="text-white/65 text-base max-w-sm leading-relaxed">
@@ -87,19 +87,17 @@ const techFeatures = [
       {
         techFeatures.map((feature, i) => (
           <div
-            class="rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:border-red-900/30 group"
-            style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.06); backdrop-filter: blur(10px);"
+            class="rounded-2xl p-6 border transition-all duration-300 hover:-translate-y-1 group"
+            style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); backdrop-filter: blur(10px);"
           >
             <div
               class="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4 transition-transform duration-300 group-hover:scale-110"
-              style={`background: ${i % 3 === 0 ? "rgba(108,3,2,0.3)" : "rgba(255,255,255,0.06)"};`}
+              style={`background: ${i % 3 === 0 ? "rgba(164,137,108,0.25)" : "rgba(255,255,255,0.07)"};`}
             >
               {feature.icon}
             </div>
             <h3 class="text-lg font-bold text-white mb-2">{feature.title}</h3>
-            <p class="text-sm text-white/60 leading-relaxed">
-              {feature.description}
-            </p>
+            <p class="text-sm text-white/60 leading-relaxed">{feature.description}</p>
           </div>
         ))
       }
@@ -108,15 +106,13 @@ const techFeatures = [
     <!-- Bottom quote -->
     <div
       class="mt-16 rounded-3xl p-10 border text-center"
-      style="background: rgba(108,3,2,0.12); border-color: rgba(108,3,2,0.35);"
+      style="background: rgba(164,137,108,0.1); border-color: rgba(164,137,108,0.3);"
     >
-      <p
-        class="text-xl md:text-2xl font-medium text-white leading-relaxed italic"
-      >
+      <p class="text-xl md:text-2xl font-medium text-white leading-relaxed italic">
         "With Visionary you can do everything associated with your community
         without ever having to leave the comfort of your home!"
       </p>
-      <p class="text-sm mt-4" style="color: #e05252;">
+      <p class="text-sm mt-4" style="color: #A4896C;">
         — Visionary Property Management of Florida
       </p>
     </div>

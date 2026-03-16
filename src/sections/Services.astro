@@ -4,7 +4,6 @@ const services = [
     icon: "🏛️",
     title: "Management Services",
     subtitle: "Administrative Excellence",
-    color: "#6C0302",
     items: [
       "Annual meeting & election documents",
       "Board meeting attendance & minute taking",
@@ -17,13 +16,11 @@ const services = [
     ],
     description:
       "Highly trained Visionary managers make it their priority to ensure the smooth day-to-day functioning of your community.",
-    featured: true,
   },
   {
     icon: "📊",
     title: "Bookkeeping",
     subtitle: "Financial Transparency",
-    color: "#3d0101",
     items: [
       "Assessment collection & ACH payments",
       "Budget preparation & reserve transfers",
@@ -34,13 +31,11 @@ const services = [
     ],
     description:
       "Industry-leading, transparent bookkeeping service that identifies inefficiencies and maximizes your community's financial health.",
-    featured: false,
   },
   {
     icon: "🔧",
     title: "Maintenance Services",
     subtitle: "Community Upkeep",
-    color: "#2a1010",
     items: [
       "Common area & pool cleaning",
       "General handyman services",
@@ -51,13 +46,11 @@ const services = [
     ],
     description:
       "Top-notch maintenance services that keep your community looking its best and maintaining property values.",
-    featured: false,
   },
   {
     icon: "🌐",
     title: "Website Services",
     subtitle: "Digital Community Hub",
-    color: "#1a1a1a",
     items: [
       "Community-specific website creation",
       "Password-protected board & homeowner portals",
@@ -68,7 +61,6 @@ const services = [
     ],
     description:
       "Showcase your community at its best with a professional, resource-rich website that connects residents.",
-    featured: false,
   },
 ];
 ---
@@ -79,129 +71,119 @@ const services = [
     <div class="text-center mb-16">
       <span
         class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
-        style="background: rgba(108,3,2,0.08); color: #6C0302;"
+        style="background: rgba(139,4,4,0.08); color: #8B0404;"
       >
         Our Services
       </span>
-      <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #1a1a1a;">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #2a2a2a;">
         Everything your community<br />
-        <span style="color: #6C0302;">needs to thrive</span>
+        <span style="color: #8B0404;">needs to thrive</span>
       </h2>
       <p class="text-lg max-w-2xl mx-auto" style="color: #666;">
         Visionary recognizes that there is no "one size fits all." All of our
-        services are fully customized to meet the unique specifications of your
-        community.
+        services are fully customized to meet the unique specifications of your community.
       </p>
     </div>
 
     <!-- Bento Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-      <!-- Featured large card -->
+      <!-- Featured large card — Management -->
       <div
-        class="lg:col-span-2 rounded-3xl p-8 text-white relative overflow-hidden group"
-        style="background: linear-gradient(135deg, #6C0302 0%, #3d0101 100%);"
+        class="lg:col-span-2 rounded-3xl p-8 text-white relative overflow-hidden"
+        style="background: linear-gradient(135deg, #8B0404 0%, #5a0202 100%);"
       >
-        <!-- Background pattern -->
         <div
           class="absolute inset-0 opacity-5"
           style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"
-        >
-        </div>
+        ></div>
         <div class="relative z-10">
           <div class="flex items-start justify-between mb-6">
             <div>
               <span class="text-4xl mb-3 block">{services[0].icon}</span>
-              <span
-                class="text-xs font-semibold uppercase tracking-widest opacity-70"
-                >{services[0].subtitle}</span
-              >
+              <span class="text-xs font-semibold uppercase tracking-widest opacity-70">
+                {services[0].subtitle}
+              </span>
               <h3 class="text-2xl font-bold mt-1">{services[0].title}</h3>
             </div>
             <span
               class="px-3 py-1.5 rounded-full text-xs font-bold"
-              style="background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3);"
+              style="background: #A4896C; color: white;"
             >
               Core Service
             </span>
           </div>
           <p class="text-white/80 text-sm mb-6">{services[0].description}</p>
           <div class="grid grid-cols-2 gap-2">
-            {
-              services[0].items.map((item) => (
-                <div class="flex items-center gap-2 text-sm text-white/80">
-                  <span
-                    class="w-1.5 h-1.5 rounded-full shrink-0"
-                    style="background: rgba(255,255,255,0.6);"
-                  />
-                  {item}
-                </div>
-              ))
-            }
+            {services[0].items.map((item) => (
+              <div class="flex items-center gap-2 text-sm text-white/80">
+                <span
+                  class="w-1.5 h-1.5 rounded-full shrink-0"
+                  style="background: #A4896C;"
+                />
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <!-- Right column -->
+      <!-- Right column — Bookkeeping + Maintenance -->
       <div class="flex flex-col gap-6">
-        {
-          services.slice(1, 3).map((service) => (
-            <div
-              class="rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group"
-              style="background: #f5f5f5; border-color: rgba(108,3,2,0.08);"
+        {services.slice(1, 3).map((service) => (
+          <div
+            class="rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+            style="background: #f5f5f5; border-color: rgba(139,4,4,0.08);"
+          >
+            <span class="text-3xl mb-3 block">{service.icon}</span>
+            <span
+              class="text-xs font-semibold uppercase tracking-widest"
+              style="color: #8B0404;"
             >
-              <span class="text-3xl mb-3 block">{service.icon}</span>
-              <span
-                class="text-xs font-semibold uppercase tracking-widest"
-                style="color: #6C0302;"
-              >
-                {service.subtitle}
-              </span>
-              <h3
-                class="text-lg font-bold mb-2 mt-1"
-                style="color: #1a1a1a; font-family: 'Inter', sans-serif;"
-              >
-                {service.title}
-              </h3>
-              <p class="text-sm mb-4" style="color: #888;">
-                {service.description}
-              </p>
-              <div class="flex flex-wrap gap-1.5">
-                {service.items.slice(0, 3).map((item) => (
-                  <span
-                    class="text-xs px-2.5 py-1 rounded-full font-medium"
-                    style="background: rgba(108,3,2,0.08); color: #6C0302;"
-                  >
-                    {item}
-                  </span>
-                ))}
+              {service.subtitle}
+            </span>
+            <h3
+              class="text-lg font-bold mb-2 mt-1"
+              style="color: #2a2a2a; font-family: 'Inter', sans-serif;"
+            >
+              {service.title}
+            </h3>
+            <p class="text-sm mb-4" style="color: #888;">{service.description}</p>
+            <div class="flex flex-wrap gap-1.5">
+              {service.items.slice(0, 3).map((item) => (
                 <span
                   class="text-xs px-2.5 py-1 rounded-full font-medium"
-                  style="background: rgba(0,0,0,0.05); color: #999;"
+                  style="background: rgba(139,4,4,0.08); color: #8B0404;"
                 >
-                  +{service.items.length - 3} more
+                  {item}
                 </span>
-              </div>
+              ))}
+              <span
+                class="text-xs px-2.5 py-1 rounded-full font-medium"
+                style="background: rgba(0,0,0,0.05); color: #999;"
+              >
+                +{service.items.length - 3} more
+              </span>
             </div>
-          ))
-        }
+          </div>
+        ))}
       </div>
 
       <!-- Bottom full-width card — Website Services -->
       <div
         class="lg:col-span-3 rounded-3xl p-8 border transition-all duration-300 hover:shadow-lg"
-        style="background: linear-gradient(135deg, #1a1a1a 0%, #2a0101 100%); border-color: rgba(108,3,2,0.2);"
+        style="background: linear-gradient(135deg, #252525 0%, #3d1212 100%); border-color: rgba(139,4,4,0.2);"
       >
-        <div
-          class="flex flex-col md:flex-row items-start md:items-center gap-6"
-        >
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
           <div class="shrink-0">
             <span class="text-4xl">{services[3].icon}</span>
           </div>
           <div class="flex-1">
             <span
               class="text-xs font-semibold uppercase tracking-widest"
-              style="color: #e05252;">{services[3].subtitle}</span
+              style="color: #A4896C;"
             >
+              {services[3].subtitle}
+            </span>
             <h3
               class="text-xl font-bold mb-2 mt-1 text-white"
               style="font-family: 'Inter', sans-serif;"
@@ -213,16 +195,14 @@ const services = [
             </p>
           </div>
           <div class="flex flex-wrap gap-2 md:max-w-sm">
-            {
-              services[3].items.map((item) => (
-                <span
-                  class="text-xs px-3 py-1.5 rounded-full font-medium"
-                  style="background: rgba(108,3,2,0.3); color: #ffe4e4;"
-                >
-                  {item}
-                </span>
-              ))
-            }
+            {services[3].items.map((item) => (
+              <span
+                class="text-xs px-3 py-1.5 rounded-full font-medium"
+                style="background: rgba(164,137,108,0.2); color: #c0a88c;"
+              >
+                {item}
+              </span>
+            ))}
           </div>
         </div>
       </div>
@@ -235,10 +215,10 @@ const services = [
       </p>
       <a
         href="#contact"
-        class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm border-2 transition-all duration-300 hover:text-white!"
-        style="border-color: #6C0302; color: #6C0302;"
-        onmouseover="this.style.background='#6C0302'"
-        onmouseout="this.style.background='transparent'"
+        class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm border-2 transition-all duration-300"
+        style="border-color: #8B0404; color: #8B0404;"
+        onmouseover="this.style.background='#8B0404'; this.style.color='white';"
+        onmouseout="this.style.background='transparent'; this.style.color='#8B0404';"
       >
         Request a Custom Proposal →
       </a>

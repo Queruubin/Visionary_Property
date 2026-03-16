@@ -15,7 +15,7 @@ const serviceLinks = [
 ];
 ---
 
-<footer id="contact" style="background: #0f0f0f;">
+<footer id="contact" style="background: #1e1e1e;">
   <!-- Top section -->
   <div class="max-w-7xl mx-auto px-6 py-16">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
@@ -24,13 +24,13 @@ const serviceLinks = [
         <div class="flex items-center gap-3 mb-5">
           <div
             class="w-10 h-10 rounded-lg flex items-center justify-center"
-            style="background: #6C0302;"
+            style="background: #8B0404;"
           >
             <span class="text-white font-black text-lg">V</span>
           </div>
           <div>
             <div class="font-black text-white text-base">Visionary</div>
-            <div class="text-xs font-medium text-white/50">
+            <div class="text-xs font-medium" style="color: rgba(255,255,255,0.45);">
               Property Management of Florida
             </div>
           </div>
@@ -82,10 +82,7 @@ const serviceLinks = [
                   href={link.href}
                   class="text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5"
                 >
-                  <span
-                    class="w-1 h-1 rounded-full"
-                    style="background: #6C0302;"
-                  />
+                  <span class="w-1 h-1 rounded-full" style="background: #A4896C;" />
                   {link.label}
                 </a>
               </li>
@@ -107,10 +104,7 @@ const serviceLinks = [
                   href="#services"
                   class="text-sm text-white/60 hover:text-white hover:translate-x-1 transition-all inline-flex items-center gap-1.5"
                 >
-                  <span
-                    class="w-1 h-1 rounded-full"
-                    style="background: #6C0302;"
-                  />
+                  <span class="w-1 h-1 rounded-full" style="background: #A4896C;" />
                   {service}
                 </a>
               </li>
@@ -123,7 +117,7 @@ const serviceLinks = [
     <!-- Contact CTA banner -->
     <div
       class="mt-14 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-center justify-between gap-6 border"
-      style="background: rgba(108,3,2,0.12); border-color: rgba(108,3,2,0.3);"
+      style="background: rgba(139,4,4,0.12); border-color: rgba(139,4,4,0.25);"
     >
       <div>
         <h3 class="text-xl md:text-2xl font-bold text-white mb-1">
@@ -143,7 +137,7 @@ const serviceLinks = [
         <a
           href="mailto:info@visionarypartners.com"
           class="px-6 py-3 rounded-full text-sm font-bold transition-all hover:scale-105"
-          style="background: #6C0302; color: white;"
+          style="background: #A4896C; color: white;"
         >
           ✉️ Send an Email
         </a>
@@ -160,14 +154,12 @@ const serviceLinks = [
         © {new Date().getFullYear()} Visionary Property Management of Florida. All rights reserved.
       </p>
       <div class="flex items-center gap-5">
-        <a
-          href="#"
-          class="text-xs text-white/30 hover:text-white/60 transition-colors">Privacy Policy</a
-        >
-        <a
-          href="#"
-          class="text-xs text-white/30 hover:text-white/60 transition-colors">Terms of Service</a
-        >
+        <a href="#" class="text-xs text-white/30 hover:text-white/60 transition-colors">
+          Privacy Policy
+        </a>
+        <a href="#" class="text-xs text-white/30 hover:text-white/60 transition-colors">
+          Terms of Service
+        </a>
       </div>
     </div>
   </div>

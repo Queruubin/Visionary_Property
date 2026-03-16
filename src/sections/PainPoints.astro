@@ -30,18 +30,15 @@ const painPoints = [
     <div class="text-center mb-16">
       <span
         class="inline-block text-sm font-semibold uppercase tracking-widest mb-4 px-4 py-1.5 rounded-full"
-        style="background: rgba(108,3,2,0.1); color: #6C0302;"
+        style="background: rgba(139,4,4,0.08); color: #8B0404;"
       >
         We Solve Your Problems
       </span>
-      <h2
-        class="text-4xl md:text-5xl font-bold mb-4"
-        style="color: #1a1a1a;"
-      >
-        Sound familiar?<br />
+      <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #2a2a2a;">
+        Sound familiar?
       </h2>
       <p class="text-lg max-w-xl mx-auto" style="color: #666;">
-        <span style="color: #6C0302;" class="font-bold">Visionary</span>
+        <span style="color: #8B0404;" class="font-bold">Visionary</span>
         understands the frustrations of poor association management.
         That's exactly why we built Visionary.
       </p>
@@ -50,16 +47,13 @@ const painPoints = [
     <!-- Pain point cards -->
     <div class="flex flex-col gap-6">
       {
-        painPoints.map((point, i) => (
+        painPoints.map((point) => (
           <div
             class="rounded-3xl overflow-hidden border flex flex-col md:flex-row"
-            style="border-color: rgba(108,3,2,0.1);"
+            style="border-color: rgba(139,4,4,0.1);"
           >
             <!-- Problem side -->
-            <div
-              class="flex-1 p-8 flex gap-5 items-start"
-              style="background: white;"
-            >
+            <div class="flex-1 p-8 flex gap-5 items-start" style="background: white;">
               <div
                 class="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-xl"
                 style="background: rgba(220,50,50,0.08);"
@@ -70,48 +64,40 @@ const painPoints = [
                 <span class="text-xs font-bold uppercase tracking-widest text-red-400 mb-2 block">
                   The Problem
                 </span>
-                <p
-                  class="font-medium leading-relaxed"
-                  style="color: #1a1a1a;"
-                >
+                <p class="font-medium leading-relaxed" style="color: #2a2a2a;">
                   {point.problem}
                 </p>
               </div>
             </div>
 
-            <!-- Arrow -->
+            <!-- Arrow divider -->
             <div
               class="flex items-center justify-center px-4 py-4 md:py-0"
-              style="background: rgba(108,3,2,0.05);"
+              style="background: rgba(139,4,4,0.04);"
             >
-              <span class="text-2xl hidden md:block" style="color: #6C0302;"
-                >→</span
-              >
-              <span class="text-2xl md:hidden" style="color: #6C0302;">↓</span>
+              <span class="text-2xl hidden md:block" style="color: #8B0404;">→</span>
+              <span class="text-2xl md:hidden" style="color: #8B0404;">↓</span>
             </div>
 
             <!-- Solution side -->
             <div
               class="flex-1 p-8 flex gap-5 items-start"
-              style="background: linear-gradient(135deg, rgba(108,3,2,0.04) 0%, rgba(108,3,2,0.07) 100%);"
+              style="background: linear-gradient(135deg, rgba(164,137,108,0.06) 0%, rgba(164,137,108,0.1) 100%);"
             >
               <div
                 class="w-12 h-12 shrink-0 rounded-2xl flex items-center justify-center text-xl"
-                style="background: rgba(108,3,2,0.1);"
+                style="background: rgba(164,137,108,0.15);"
               >
                 {point.icon}
               </div>
               <div>
                 <span
                   class="text-xs font-bold uppercase tracking-widest mb-2 block"
-                  style="color: #6C0302;"
+                  style="color: #A4896C;"
                 >
                   Visionary Solution
                 </span>
-                <p
-                  class="font-medium leading-relaxed"
-                  style="color: #1a1a1a;"
-                >
+                <p class="font-medium leading-relaxed" style="color: #2a2a2a;">
                   {point.solution}
                 </p>
               </div>
@@ -123,13 +109,13 @@ const painPoints = [
 
     <!-- CTA -->
     <div class="text-center mt-12">
-      <p class="font-semibold text-lg mb-4" style="color: #6C0302;">
+      <p class="font-semibold text-lg mb-4" style="color: #8B0404;">
         Visionary Property Management will partner with you & resolve this!
       </p>
       <a
         href="#contact"
         class="inline-block px-8 py-4 rounded-full font-bold text-sm text-white transition-all duration-300 hover:scale-105 hover:shadow-xl"
-        style="background: linear-gradient(135deg, #6C0302 0%, #8a0403 100%);"
+        style="background: linear-gradient(135deg, #8B0404 0%, #a80505 100%);"
       >
         Get a Free Consultation
       </a>
