@@ -4,10 +4,10 @@
 
 <section
   id="home"
-  class="relative min-h-screen flex items-center justify-center overflow-hidden"
+  class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
   style="background: linear-gradient(135deg, #faf4ee 0%, #f0e4d0 50%, #e8d0b0 100%);"
 >
-  <!-- Animated background orbs — use red + deep tan for contrast on beige -->
+  <!-- Animated background orbs -->
   <div
     class="absolute top-16 right-8 w-[500px] h-[500px] rounded-full opacity-25 blur-3xl animate-pulse"
     style="background: #8B0404;"
@@ -32,86 +32,105 @@
   </div>
 
   <!-- Content -->
-  <div class="relative z-10 max-w-6xl mx-auto px-6 text-center py-32 mt-16">
-    <!-- Badge -->
-    <div
-      class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-8 border backdrop-blur-sm"
-      style="background: rgba(139,4,4,0.08); border-color: rgba(139,4,4,0.2); color: #8B0404;"
-    >
-      <span
-        class="w-2 h-2 rounded-full animate-pulse"
-        style="background: #A4896C;"></span>
-      Trusted Community Association Management · Palm Beach Gardens, FL
+  <div
+    class="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center gap-8 pt-28 pb-32"
+  >
+    <!-- HERO LOGO — decorative/visual; aria-hidden so screen readers don't double-read it.
+         The real SEO logo with alt + link lives in the navbar. -->
+    <div class="flex justify-center" id="hero-logo-wrap">
+      <img
+        id="hero-logo-img"
+        src="/logo.png"
+        alt=""
+        aria-hidden="true"
+        role="presentation"
+        width="500"
+        height="300"
+        class="w-[700px] md:w-[700px] object-contain"
+        style="mix-blend-mode: multiply; will-change: opacity;"
+        loading="eager"
+        decoding="async"
+      />
     </div>
 
-    <!-- Main headline — dark text on light background -->
-    <h1
-      class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
-      style="color: #2a2a2a;"
-    >
-      <span style="color: #8B0404;">Visionary Management</span>
-      <br />
-      is looking towards the future<br />
-      while taking care of today.
-    </h1>
-
-    <!-- Subtitle -->
-    <p
-      class="text-lg md:text-xl max-w-2xl mx-auto mb-10"
-      style="color: rgba(42,42,42,0.65);"
-    >
-      Redefining association management through strategic partnerships,
-      cutting-edge technology, and an unwavering commitment to your community's
-      success.
-    </p>
-
-    <!-- CTA Buttons -->
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-      <a
-        href="#contact"
-        class="px-8 py-4 rounded-full text-base font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-md"
-        style="background: #8B0404; color: white;"
+    <!-- SLOGAN — below the logo -->
+    <div id="hero-text" class="flex flex-col items-center gap-4">
+      <!-- Badge -->
+      <div
+        class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold border backdrop-blur-sm"
+        style="background: rgba(139,4,4,0.07); border-color: rgba(139,4,4,0.18); color: #8B0404;"
       >
-        Request Information
-      </a>
-      <a
-        href="#services"
-        class="px-8 py-4 rounded-full text-base font-semibold border-2 transition-all duration-300 hover:shadow-md"
-        style="border-color: rgba(42,42,42,0.3); color: #2a2a2a;"
-        onmouseover="this.style.background='rgba(42,42,42,0.06)';"
-        onmouseout="this.style.background='transparent';"
-      >
-        Explore Our Services →
-      </a>
-    </div>
+        <span
+          class="w-2 h-2 rounded-full animate-pulse"
+          style="background: #A4896C;"></span>
+        Trusted Community Association Management · Palm Beach Gardens, FL
+      </div>
 
-    <!-- Stats bar -->
-    <div class="mt-20 flex flex-row flex-wrap justify-center gap-6">
-      {
-        [
-          {
-            number: "25+",
-            label: "Years of Experience in condominium and HOA",
-          },
-          { number: "100%", label: "Customized Services" },
-        ].map((stat) => (
-          <div
-            class="rounded-2xl p-5 border"
-            style="background: rgba(255,255,255,0.55); border-color: rgba(139,4,4,0.15); backdrop-filter: blur(8px);"
-          >
-            <div class="text-3xl font-black mb-1" style="color: #8B0404;">
-              {stat.number}
+      <!-- Tagline -->
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
+        style="color: #2a2a2a;"
+      >
+        Partnering with your community<br />
+        <span style="color: #8B0404;">to create a better tomorrow</span>
+      </h1>
+
+      <p class="text-lg max-w-2xl" style="color: rgba(42,42,42,0.62);">
+        Redefining association management through strategic partnerships,
+        cutting-edge technology, and an unwavering commitment to your
+        community's success.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div
+        class="flex flex-col sm:flex-row gap-4 justify-center items-center mt-2"
+      >
+        <a
+          href="#contact"
+          class="px-8 py-4 rounded-full text-base font-bold transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-md"
+          style="background: #8B0404; color: white;"
+        >
+          Request Information
+        </a>
+        <a
+          href="#services"
+          class="px-8 py-4 rounded-full text-base font-semibold border-2 transition-all duration-300 hover:shadow-md"
+          style="border-color: rgba(42,42,42,0.3); color: #2a2a2a;"
+          onmouseover="this.style.background='rgba(42,42,42,0.06)';"
+          onmouseout="this.style.background='transparent';"
+        >
+          Explore Our Services →
+        </a>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="flex flex-row flex-wrap justify-center gap-5 mt-4">
+        {
+          [
+            { number: "25+", label: "Years of Experience" },
+            { number: "100%", label: "Customized Services" },
+          ].map((stat) => (
+            <div
+              class="rounded-2xl px-6 py-4 border"
+              style="background: rgba(255,255,255,0.55); border-color: rgba(139,4,4,0.15); backdrop-filter: blur(8px);"
+            >
+              <div class="text-3xl font-black mb-0.5" style="color: #8B0404;">
+                {stat.number}
+              </div>
+              <div
+                class="text-sm font-medium"
+                style="color: rgba(42,42,42,0.6);"
+              >
+                {stat.label}
+              </div>
             </div>
-            <div class="text-sm font-medium" style="color: rgba(42,42,42,0.6);">
-              {stat.label}
-            </div>
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
   </div>
 
-  <!-- Wave bottom — transitions into next white/bone section -->
+  <!-- Wave bottom -->
   <div class="absolute bottom-0 left-0 right-0">
     <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

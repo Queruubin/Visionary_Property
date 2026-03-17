@@ -10,20 +10,24 @@ const navLinks = [
 
 <nav
   id="navbar"
-  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
+  class="fixed top-0 left-0 right-0 z-50 transition-colors duration-300"
 >
   <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-    <!-- Logo -->
-    <a href="#home" class="flex items-center group" id="logo-link">
-      <!-- PNG logo — mix-blend-mode:multiply removes white bg on light surfaces -->
+    <!-- Navbar logo — real SEO logo with descriptive alt and link.
+         Starts opacity:0, GSAP fades it in at end of morph. -->
+    <a
+      href="#home"
+      class="flex items-center group"
+      aria-label="Visionary Property Management of Florida LLC"
+    >
       <img
         src="/logo.png"
         alt="Visionary Property Management of Florida LLC"
         id="nav-logo"
-        width="160"
-        height="60"
-        class="transition-all duration-300 group-hover:scale-105"
-        style="mix-blend-mode: multiply; object-fit: contain;"
+        width="300"
+        height="200"
+        class="object-contain transition-transform duration-300 group-hover:scale-105"
+        style="opacity: 0; will-change: opacity, filter; mix-blend-mode: multiply; height: 100px; width: auto; max-width: 180px;"
         loading="eager"
         decoding="async"
       />
@@ -36,13 +40,12 @@ const navLinks = [
           <li>
             <a
               href={link.href}
-              class="text-md lg:text-base font-semibold transition-all duration-200 hover:opacity-100 relative nav-link"
-              id={`nav-${link.label.toLowerCase()}`}
+              class="nav-link text-base font-semibold transition-colors duration-200 relative"
               style="color: #2a2a2a;"
             >
               {link.label}
               <span
-                class="absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-300 nav-underline"
+                class="nav-underline absolute -bottom-0.5 left-0 w-0 h-0.5 transition-all duration-300"
                 style="background: #A4896C;"
               />
             </a>
@@ -52,14 +55,12 @@ const navLinks = [
     </ul>
 
     <!-- CTA Button -->
-    <div class="hidden md:flex items-center gap-4">
+    <div class="hidden md:flex items-center">
       <a
         href="#contact"
         id="portal-btn"
         class="px-5 py-2.5 rounded-md text-sm font-semibold border-2 transition-all duration-200"
         style="border-color: #8B0404; color: #8B0404;"
-        onmouseover="this.style.background='#8B0404'; this.style.color='white';"
-        onmouseout="this.style.background='transparent'; this.style.color='#8B0404'; this.style.borderColor='#8B0404';"
       >
         Portal Access
       </a>
@@ -71,9 +72,18 @@ const navLinks = [
       class="md:hidden flex flex-col gap-1.5 p-2"
       aria-label="Open menu"
     >
-      <span class="w-6 h-0.5 block transition-all duration-300 nav-bar" style="background: #2a2a2a;" id="bar1"></span>
-      <span class="w-6 h-0.5 block transition-all duration-300 nav-bar" style="background: #2a2a2a;" id="bar2"></span>
-      <span class="w-6 h-0.5 block transition-all duration-300 nav-bar" style="background: #2a2a2a;" id="bar3"></span>
+      <span
+        class="nav-bar w-6 h-0.5 block transition-all duration-300"
+        style="background: #2a2a2a;"
+        id="bar1"></span>
+      <span
+        class="nav-bar w-6 h-0.5 block transition-all duration-300"
+        style="background: #2a2a2a;"
+        id="bar2"></span>
+      <span
+        class="nav-bar w-6 h-0.5 block transition-all duration-300"
+        style="background: #2a2a2a;"
+        id="bar3"></span>
     </button>
   </div>
 
@@ -100,7 +110,7 @@ const navLinks = [
       <li class="pt-2">
         <a
           href="#contact"
-          class="block text-center px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all"
+          class="block text-center px-4 py-2.5 rounded-full text-sm font-semibold text-white"
           style="background: #8B0404;"
         >
           Portal Access
@@ -110,77 +120,189 @@ const navLinks = [
   </div>
 </nav>
 
+<!--
+  Transit logo — a fixed-positioned visual clone of the hero logo.
+  GSAP animates it from hero position → navbar position using
+  x, y, scale (transform-only = no layout recalculation, CLS = 0).
+  aria-hidden + alt="" so screen readers never read it.
+-->
+<img
+  id="transit-logo"
+  src="/logo.png"
+  alt=""
+  aria-hidden="true"
+  role="presentation"
+  style="
+    display: none;
+    position: fixed;
+    z-index: 60;
+    pointer-events: none;
+    object-fit: contain;
+    will-change: transform, opacity;
+    transform-origin: top left;
+    mix-blend-mode: multiply;
+  "
+/>
+
 <script>
+  import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ─── DOM refs ────────────────────────────────────────────────────────────────
   const navbar = document.getElementById("navbar")!;
+  const navLogo = document.getElementById("nav-logo") as HTMLImageElement;
+  const heroLogo = document.getElementById("hero-logo-img") as HTMLImageElement;
+  const transit = document.getElementById("transit-logo") as HTMLImageElement;
+  const portalBtn = document.getElementById("portal-btn") as HTMLAnchorElement;
   const menuBtn = document.getElementById("menu-btn")!;
   const mobileMenu = document.getElementById("mobile-menu")!;
-  const navLogo = document.getElementById("nav-logo") as HTMLImageElement;
-  const navLinks = document.querySelectorAll(".nav-link");
-  const navBars = document.querySelectorAll(".nav-bar");
-  const portalBtn = document.getElementById("portal-btn") as HTMLAnchorElement;
 
-  // Scroll effect
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      // Scrolled: dark solid navbar
+  // ─── Dark/light navbar UI helpers ────────────────────────────────────────────
+  function applyDark(isDark: boolean) {
+    if (isDark) {
       navbar.style.background = "rgba(30,30,30,0.96)";
       navbar.style.boxShadow = "0 4px 30px rgba(0,0,0,0.25)";
       navbar.style.backdropFilter = "blur(12px)";
-      // Flip logo blend mode so it looks good on dark bg
-      navLogo.style.mixBlendMode = "normal";
-      navLogo.style.filter = "brightness(0) invert(1)";
-      // White nav links
-      navLinks.forEach((l) => ((l as HTMLElement).style.color = "rgba(255,255,255,0.9)"));
-      navBars.forEach((b) => ((b as HTMLElement).style.background = "white"));
+      document
+        .querySelectorAll<HTMLElement>(".nav-link")
+        .forEach((l) => (l.style.color = "rgba(255,255,255,0.9)"));
+      document
+        .querySelectorAll<HTMLElement>(".nav-bar")
+        .forEach((b) => (b.style.background = "white"));
       portalBtn.style.borderColor = "white";
       portalBtn.style.color = "white";
-      portalBtn.onmouseover = () => {
-        portalBtn.style.background = "white";
-        portalBtn.style.color = "#8B0404";
-      };
-      portalBtn.onmouseout = () => {
-        portalBtn.style.background = "transparent";
-        portalBtn.style.color = "white";
-        portalBtn.style.borderColor = "white";
-      };
+      // Nav logo: flip to white on dark bg
+      navLogo.style.filter = "brightness(0) invert(1)";
+      navLogo.style.mixBlendMode = "normal";
     } else {
-      // Top: transparent navbar, logo shows on beige bg with multiply
       navbar.style.background = "transparent";
       navbar.style.boxShadow = "none";
       navbar.style.backdropFilter = "none";
-      navLogo.style.mixBlendMode = "multiply";
-      navLogo.style.filter = "none";
-      navLinks.forEach((l) => ((l as HTMLElement).style.color = "#2a2a2a"));
-      navBars.forEach((b) => ((b as HTMLElement).style.background = "#2a2a2a"));
+      document
+        .querySelectorAll<HTMLElement>(".nav-link")
+        .forEach((l) => (l.style.color = "#2a2a2a"));
+      document
+        .querySelectorAll<HTMLElement>(".nav-bar")
+        .forEach((b) => (b.style.background = "#2a2a2a"));
       portalBtn.style.borderColor = "#8B0404";
       portalBtn.style.color = "#8B0404";
-      portalBtn.onmouseover = () => {
-        portalBtn.style.background = "#8B0404";
-        portalBtn.style.color = "white";
-      };
-      portalBtn.onmouseout = () => {
-        portalBtn.style.background = "transparent";
-        portalBtn.style.color = "#8B0404";
-        portalBtn.style.borderColor = "#8B0404";
-      };
+      navLogo.style.filter = "none";
+      navLogo.style.mixBlendMode = "multiply";
     }
-  });
+    // Transit logo mirrors the same color inversion
+    if (transit.style.display !== "none") {
+      transit.style.filter = isDark ? "brightness(0) invert(1)" : "none";
+      transit.style.mixBlendMode = isDark ? "normal" : "multiply";
+    }
+  }
 
-  // Mobile menu toggle
-  menuBtn.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-  });
+  // ─── Core animation init (called on load + resize) ───────────────────────────
+  function initMorph() {
+    // Kill any previous ScrollTrigger instances to avoid stacking on resize
+    ScrollTrigger.getAll().forEach((t) => t.kill());
 
-  // Close mobile menu on link click
-  mobileMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileMenu.classList.add("hidden");
+    // ── 1. Measure hero & nav logo positions ───────────────────────────────
+    const hRect = heroLogo.getBoundingClientRect();
+    const nRect = navLogo.getBoundingClientRect();
+
+    // Scale ratio: how much smaller the nav logo is vs hero logo
+    const scaleRatio = nRect.width / hRect.width;
+
+    // Translation needed (from hero top-left corner to nav logo top-left corner)
+    const targetX = nRect.left - hRect.left;
+    const targetY = nRect.top - hRect.top;
+
+    // ── 2. Set transit logo to exactly cover the hero logo (fixed → viewport) ─
+    //    Position set once via left/top, then ONLY transform animates → CLS = 0
+    gsap.set(transit, {
+      display: "block",
+      left: hRect.left,
+      top: hRect.top,
+      width: hRect.width,
+      height: "auto",
+      x: 0,
+      y: 0,
+      scale: 1,
+      opacity: 1,
     });
+
+    // Hero logo hidden (transit is our visual stand-in)
+    gsap.set(heroLogo, { opacity: 0 });
+    gsap.set(navLogo, { opacity: 0 });
+
+    // ── 3. GSAP ScrollTrigger timeline ──────────────────────────────────────
+    const heroSection = document.getElementById("home")!;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroSection,
+        start: "top top",
+        end: "55% top", // morph completes when hero is 55% scrolled past
+        scrub: 1, // smooth 1-second lag behind scroll
+        onUpdate: (self) => {
+          // Navbar dark/light: switch at 15% scroll progress through hero
+          applyDark(self.progress > 0.15);
+        },
+        onRefresh: () => {
+          // On ScrollTrigger refresh (e.g. after resize), re-read nav logo position
+          const freshNavRect = navLogo.getBoundingClientRect();
+          const freshHeroRect = heroLogo.getBoundingClientRect();
+          const freshScale = freshNavRect.width / freshHeroRect.width;
+          const freshX = freshNavRect.left - freshHeroRect.left;
+          const freshY = freshNavRect.top - freshHeroRect.top;
+          tl.vars.scrollTrigger!; // keep reference alive
+        },
+      },
+    });
+
+    tl
+      // Transit logo: fly from hero → navbar using pure transforms (NO layout props)
+      .to(
+        transit,
+        {
+          x: targetX,
+          y: targetY,
+          scale: scaleRatio,
+          transformOrigin: "top left",
+          ease: "power2.inOut",
+          duration: 1,
+        },
+        0,
+      )
+      // Transit fades out just before arriving so nav logo takes over cleanly
+      .to(transit, { opacity: 0, duration: 0.15 }, 0.82)
+      // Nav logo fades in at 80% of the timeline
+      .to(navLogo, { opacity: 1, duration: 0.2, ease: "power1.in" }, 0.8);
+
+    return tl;
+  }
+
+  // ─── Wait for images to load so getBoundingClientRect is accurate ─────────────
+  if (document.readyState === "complete") {
+    initMorph();
+  } else {
+    window.addEventListener("load", initMorph, { once: true });
+  }
+
+  // ─── Re-init on resize (recalculate positions) ─────────────────────────────
+  let _resizeTimer: ReturnType<typeof setTimeout>;
+  window.addEventListener("resize", () => {
+    clearTimeout(_resizeTimer);
+    _resizeTimer = setTimeout(() => {
+      // Reset element states before re-initialising
+      gsap.set(transit, { x: 0, y: 0, scale: 1, opacity: 1 });
+      gsap.set(heroLogo, { opacity: 0 });
+      gsap.set(navLogo, { opacity: 0 });
+      initMorph();
+      ScrollTrigger.refresh();
+    }, 200);
   });
 
-  // Nav link hover underline
+  // ─── Nav link hover underline ─────────────────────────────────────────────
   document.querySelectorAll(".nav-link").forEach((link) => {
-    const underline = link.querySelector(".nav-underline") as HTMLElement;
+    const underline = link.querySelector<HTMLElement>(".nav-underline");
     link.addEventListener("mouseenter", () => {
       if (underline) underline.style.width = "100%";
     });
@@ -188,4 +310,27 @@ const navLinks = [
       if (underline) underline.style.width = "0%";
     });
   });
+
+  // ─── Portal button hover ──────────────────────────────────────────────────
+  portalBtn.addEventListener("mouseenter", () => {
+    const isDark = window.scrollY > 60;
+    portalBtn.style.background = isDark ? "white" : "#8B0404";
+    portalBtn.style.color = isDark ? "#8B0404" : "white";
+  });
+  portalBtn.addEventListener("mouseleave", () => {
+    portalBtn.style.background = "transparent";
+    const isDark = window.scrollY > 60;
+    portalBtn.style.borderColor = isDark ? "white" : "#8B0404";
+    portalBtn.style.color = isDark ? "white" : "#8B0404";
+  });
+
+  // ─── Mobile menu ─────────────────────────────────────────────────────────
+  menuBtn.addEventListener("click", () =>
+    mobileMenu.classList.toggle("hidden"),
+  );
+  mobileMenu
+    .querySelectorAll("a")
+    .forEach((a) =>
+      a.addEventListener("click", () => mobileMenu.classList.add("hidden")),
+    );
 </script>
