@@ -13,6 +13,7 @@ const services = [
       "Hurricane preparedness",
       "Property inspections",
       "Rule enforcement & violations reports",
+      "Property concierge services",
     ],
     description:
       "Highly trained Visionary managers make it their priority to ensure the smooth day-to-day functioning of your community.",
@@ -81,7 +82,8 @@ const services = [
       </h2>
       <p class="text-lg max-w-2xl mx-auto" style="color: #666;">
         Visionary recognizes that there is no "one size fits all." All of our
-        services are fully customized to meet the unique specifications of your community.
+        services are fully customized to meet the unique specifications of your
+        community.
       </p>
     </div>
 
@@ -95,12 +97,15 @@ const services = [
         <div
           class="absolute inset-0 opacity-5"
           style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 30px 30px;"
-        ></div>
+        >
+        </div>
         <div class="relative z-10">
           <div class="flex items-start justify-between mb-6">
             <div>
               <span class="text-4xl mb-3 block">{services[0].icon}</span>
-              <span class="text-xs font-semibold uppercase tracking-widest opacity-70">
+              <span
+                class="text-xs font-semibold uppercase tracking-widest opacity-70"
+              >
                 {services[0].subtitle}
               </span>
               <h3 class="text-2xl font-bold mt-1">{services[0].title}</h3>
@@ -114,58 +119,64 @@ const services = [
           </div>
           <p class="text-white/80 text-sm mb-6">{services[0].description}</p>
           <div class="grid grid-cols-2 gap-2">
-            {services[0].items.map((item) => (
-              <div class="flex items-center gap-2 text-sm text-white/80">
-                <span
-                  class="w-1.5 h-1.5 rounded-full shrink-0"
-                  style="background: #A4896C;"
-                />
-                {item}
-              </div>
-            ))}
+            {
+              services[0].items.map((item) => (
+                <div class="flex items-center gap-2 text-sm text-white/80">
+                  <span
+                    class="w-1.5 h-1.5 rounded-full shrink-0"
+                    style="background: #A4896C;"
+                  />
+                  {item}
+                </div>
+              ))
+            }
           </div>
         </div>
       </div>
 
       <!-- Right column — Bookkeeping + Maintenance -->
       <div class="flex flex-col gap-6">
-        {services.slice(1, 3).map((service) => (
-          <div
-            class="rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-            style="background: #f5f5f5; border-color: rgba(139,4,4,0.08);"
-          >
-            <span class="text-3xl mb-3 block">{service.icon}</span>
-            <span
-              class="text-xs font-semibold uppercase tracking-widest"
-              style="color: #8B0404;"
+        {
+          services.slice(1, 3).map((service) => (
+            <div
+              class="rounded-3xl p-6 border transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              style="background: #f5f5f5; border-color: rgba(139,4,4,0.08);"
             >
-              {service.subtitle}
-            </span>
-            <h3
-              class="text-lg font-bold mb-2 mt-1"
-              style="color: #2a2a2a; font-family: 'Inter', sans-serif;"
-            >
-              {service.title}
-            </h3>
-            <p class="text-sm mb-4" style="color: #888;">{service.description}</p>
-            <div class="flex flex-wrap gap-1.5">
-              {service.items.slice(0, 3).map((item) => (
+              <span class="text-3xl mb-3 block">{service.icon}</span>
+              <span
+                class="text-xs font-semibold uppercase tracking-widest"
+                style="color: #8B0404;"
+              >
+                {service.subtitle}
+              </span>
+              <h3
+                class="text-lg font-bold mb-2 mt-1"
+                style="color: #2a2a2a; font-family: 'Inter', sans-serif;"
+              >
+                {service.title}
+              </h3>
+              <p class="text-sm mb-4" style="color: #888;">
+                {service.description}
+              </p>
+              <div class="flex flex-wrap gap-1.5">
+                {service.items.slice(0, 3).map((item) => (
+                  <span
+                    class="text-xs px-2.5 py-1 rounded-full font-medium"
+                    style="background: rgba(139,4,4,0.08); color: #8B0404;"
+                  >
+                    {item}
+                  </span>
+                ))}
                 <span
                   class="text-xs px-2.5 py-1 rounded-full font-medium"
-                  style="background: rgba(139,4,4,0.08); color: #8B0404;"
+                  style="background: rgba(0,0,0,0.05); color: #999;"
                 >
-                  {item}
+                  +{service.items.length - 3} more
                 </span>
-              ))}
-              <span
-                class="text-xs px-2.5 py-1 rounded-full font-medium"
-                style="background: rgba(0,0,0,0.05); color: #999;"
-              >
-                +{service.items.length - 3} more
-              </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
 
       <!-- Bottom full-width card — Website Services -->
@@ -173,7 +184,9 @@ const services = [
         class="lg:col-span-3 rounded-3xl p-8 border transition-all duration-300 hover:shadow-lg"
         style="background: linear-gradient(135deg, #252525 0%, #3d1212 100%); border-color: rgba(139,4,4,0.2);"
       >
-        <div class="flex flex-col md:flex-row items-start md:items-center gap-6">
+        <div
+          class="flex flex-col md:flex-row items-start md:items-center gap-6"
+        >
           <div class="shrink-0">
             <span class="text-4xl">{services[3].icon}</span>
           </div>
@@ -195,14 +208,16 @@ const services = [
             </p>
           </div>
           <div class="flex flex-wrap gap-2 md:max-w-sm">
-            {services[3].items.map((item) => (
-              <span
-                class="text-xs px-3 py-1.5 rounded-full font-medium"
-                style="background: rgba(164,137,108,0.2); color: #c0a88c;"
-              >
-                {item}
-              </span>
-            ))}
+            {
+              services[3].items.map((item) => (
+                <span
+                  class="text-xs px-3 py-1.5 rounded-full font-medium"
+                  style="background: rgba(164,137,108,0.2); color: #c0a88c;"
+                >
+                  {item}
+                </span>
+              ))
+            }
           </div>
         </div>
       </div>
