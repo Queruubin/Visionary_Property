@@ -1,0 +1,292 @@
+---
+
+---
+
+<div
+    id="contact-modal"
+    class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+    aria-hidden="true"
+>
+    <div class="contact-modal__overlay absolute inset-0 bg-black/65"></div>
+
+    <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="contact-modal-title"
+        class="contact-modal__panel relative w-full max-w-2xl rounded-3xl border p-6 md:p-8"
+        style="background: #f5f1eb; border-color: rgba(139, 4, 4, 0.2);"
+    >
+        <button
+            type="button"
+            data-contact-close
+            aria-label="Close contact form"
+            class="absolute right-4 top-4 h-10 w-10 rounded-full border text-lg font-bold transition-colors"
+            style="border-color: rgba(42, 42, 42, 0.2); color: #2a2a2a;"
+        >
+            x
+        </button>
+
+        <div class="mb-5">
+            <p
+                class="inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wider"
+                style="background: rgba(139, 4, 4, 0.1); color: #8b0404;"
+            >
+                Let's Talk
+            </p>
+            <h3
+                id="contact-modal-title"
+                class="mt-3 text-2xl md:text-3xl font-bold"
+                style="color: #2a2a2a;"
+            >
+                Request Information
+            </h3>
+            <p class="mt-2 text-sm" style="color: rgba(42, 42, 42, 0.7);">
+                Share your details and we will contact you shortly.
+            </p>
+        </div>
+
+        <form
+            id="contact-form"
+            class="grid grid-cols-1 md:grid-cols-2 gap-4"
+            novalidate
+        >
+            <input
+                type="hidden"
+                name="access_key"
+                value={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY ?? ""}
+            />
+            <input
+                type="hidden"
+                name="subject"
+                value="New website lead - Visionary Property"
+            />
+            <input
+                type="checkbox"
+                name="botcheck"
+                class="hidden"
+                style="display: none;"
+            />
+            <input
+                type="hidden"
+                name="source_button"
+                id="source-button"
+                value="website"
+            />
+
+            <label
+                class="flex flex-col gap-1.5 text-sm"
+                style="color: #2a2a2a;"
+            >
+                Name
+                <input
+                    name="name"
+                    type="text"
+                    required
+                    class="rounded-xl border px-4 py-3"
+                    style="border-color: rgba(42, 42, 42, 0.2); background: white;"
+                    placeholder="Your full name"
+                />
+            </label>
+
+            <label
+                class="flex flex-col gap-1.5 text-sm"
+                style="color: #2a2a2a;"
+            >
+                Email
+                <input
+                    name="email"
+                    type="email"
+                    required
+                    class="rounded-xl border px-4 py-3"
+                    style="border-color: rgba(42, 42, 42, 0.2); background: white;"
+                    placeholder="you@email.com"
+                />
+            </label>
+
+            <label
+                class="flex flex-col gap-1.5 text-sm md:col-span-2"
+                style="color: #2a2a2a;"
+            >
+                Phone (optional)
+                <input
+                    name="phone"
+                    type="tel"
+                    class="rounded-xl border px-4 py-3"
+                    style="border-color: rgba(42, 42, 42, 0.2); background: white;"
+                    placeholder="(561) 000-0000"
+                />
+            </label>
+
+            <label
+                class="flex flex-col gap-1.5 text-sm md:col-span-2"
+                style="color: #2a2a2a;"
+            >
+                Message
+                <textarea
+                    name="message"
+                    required
+                    rows="5"
+                    class="rounded-xl border px-4 py-3"
+                    style="border-color: rgba(42, 42, 42, 0.2); background: white;"
+                    placeholder="Tell us about your community and goals"
+                ></textarea>
+            </label>
+
+            <p
+                id="contact-feedback"
+                class="md:col-span-2 text-sm"
+                aria-live="polite"
+            >
+            </p>
+
+            <div
+                class="md:col-span-2 flex flex-col sm:flex-row gap-3 justify-end mt-1"
+            >
+                <button
+                    type="button"
+                    data-contact-close
+                    class="px-5 py-3 rounded-full border text-sm font-semibold"
+                    style="border-color: rgba(42, 42, 42, 0.25); color: #2a2a2a;"
+                >
+                    Cancel
+                </button>
+                <button
+                    type="submit"
+                    class="px-6 py-3 rounded-full text-sm font-bold"
+                    style="background: #8b0404; color: white;"
+                >
+                    Send Request
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const modal = document.getElementById(
+        "contact-modal",
+    ) as HTMLDivElement | null;
+    const form = document.getElementById(
+        "contact-form",
+    ) as HTMLFormElement | null;
+    const feedback = document.getElementById(
+        "contact-feedback",
+    ) as HTMLParagraphElement | null;
+    const sourceButton = document.getElementById(
+        "source-button",
+    ) as HTMLInputElement | null;
+
+    if (modal && form && feedback && sourceButton) {
+        const openModal = (source: string) => {
+            sourceButton.value = source || "website";
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+
+            const firstInput = form.querySelector("input[name='name']");
+            if (firstInput instanceof HTMLInputElement) {
+                firstInput.focus();
+            }
+        };
+
+        const closeModal = () => {
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            modal.setAttribute("aria-hidden", "true");
+            document.body.style.overflow = "";
+        };
+
+        document.addEventListener("click", (event) => {
+            const target = event.target;
+            if (!(target instanceof HTMLElement)) {
+                return;
+            }
+
+            const openTrigger = target.closest("[data-contact-open]");
+            if (openTrigger instanceof HTMLElement) {
+                event.preventDefault();
+                openModal(openTrigger.dataset.contactSource || "website");
+            }
+
+            const closeTrigger = target.closest(
+                "[data-contact-close], .contact-modal__overlay",
+            );
+            if (closeTrigger instanceof HTMLElement) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (
+                event.key === "Escape" &&
+                modal.getAttribute("aria-hidden") === "false"
+            ) {
+                closeModal();
+            }
+        });
+
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const accessKey = form.querySelector("input[name='access_key']");
+            if (
+                !(accessKey instanceof HTMLInputElement) ||
+                !accessKey.value.trim()
+            ) {
+                feedback.textContent =
+                    "Missing Web3Forms access key. Add PUBLIC_WEB3FORMS_ACCESS_KEY in your .env file.";
+                feedback.style.color = "#8b0404";
+                return;
+            }
+
+            feedback.textContent = "Sending your request...";
+            feedback.style.color = "#2a2a2a";
+
+            const submitButton = form.querySelector("button[type='submit']");
+            if (submitButton instanceof HTMLButtonElement) {
+                submitButton.disabled = true;
+                submitButton.textContent = "Sending...";
+            }
+
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(
+                    "https://api.web3forms.com/submit",
+                    {
+                        method: "POST",
+                        body: formData,
+                    },
+                );
+
+                const result = await response.json();
+
+                if (result.success) {
+                    feedback.textContent =
+                        "Your message was sent successfully. We will contact you soon.";
+                    feedback.style.color = "#147a3f";
+                    form.reset();
+
+                    setTimeout(() => {
+                        closeModal();
+                    }, 1000);
+                } else {
+                    feedback.textContent =
+                        result.message ||
+                        "We could not send your request. Please try again.";
+                    feedback.style.color = "#8b0404";
+                }
+            } catch (_error) {
+                feedback.textContent =
+                    "Network error while sending the form. Please try again in a moment.";
+                feedback.style.color = "#8b0404";
+            } finally {
+                if (submitButton instanceof HTMLButtonElement) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Send Request";
+                }
+            }
+        });
+    }
+</script>
