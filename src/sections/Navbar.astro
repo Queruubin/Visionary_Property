@@ -159,9 +159,13 @@ const navLinks = [
   const portalBtn = document.getElementById("portal-btn") as HTMLAnchorElement;
   const menuBtn = document.getElementById("menu-btn")!;
   const mobileMenu = document.getElementById("mobile-menu")!;
+  let navIsDark = false;
+  let morphTween: gsap.core.Timeline | null = null;
+  let hasMorphed = false;
 
   // ─── Dark/light navbar UI helpers ────────────────────────────────────────────
   function applyDark(isDark: boolean) {
+    navIsDark = isDark;
     if (isDark) {
       navbar.style.background = "rgba(30,30,30,0.96)";
       navbar.style.boxShadow = "0 4px 30px rgba(0,0,0,0.25)";
@@ -199,24 +203,92 @@ const navLinks = [
     }
   }
 
-  // ─── Core animation init (called on load + resize) ───────────────────────────
-  function initMorph() {
-    // Kill any previous ScrollTrigger instances to avoid stacking on resize
-    ScrollTrigger.getAll().forEach((t) => t.kill());
+  function resetToTopState(immediate = true) {
+    hasMorphed = false;
+    morphTween?.kill();
+    morphTween = null;
+    gsap.killTweensOf([heroLogo, navLogo, transit]);
 
-    // ── 1. Measure hero & nav logo positions ───────────────────────────────
+    if (immediate) {
+      gsap.set(heroLogo, { opacity: 1 });
+      gsap.set(navLogo, { opacity: 0 });
+      gsap.set(transit, {
+        display: "none",
+        clearProps:
+          "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode",
+      });
+      applyDark(false);
+    }
+  }
+
+  function morphBackToHero() {
+    if (!hasMorphed) {
+      resetToTopState(true);
+      return;
+    }
+
+    hasMorphed = false;
+    morphTween?.kill();
+    morphTween = null;
+    gsap.killTweensOf([heroLogo, navLogo, transit]);
+
     const hRect = heroLogo.getBoundingClientRect();
     const nRect = navLogo.getBoundingClientRect();
-
-    // Scale ratio: how much smaller the nav logo is vs hero logo
     const scaleRatio = nRect.width / hRect.width;
-
-    // Translation needed (from hero top-left corner to nav logo top-left corner)
     const targetX = nRect.left - hRect.left;
     const targetY = nRect.top - hRect.top;
 
-    // ── 2. Set transit logo to exactly cover the hero logo (fixed → viewport) ─
-    //    Position set once via left/top, then ONLY transform animates → CLS = 0
+    gsap.set(transit, {
+      display: "block",
+      left: hRect.left,
+      top: hRect.top,
+      width: hRect.width,
+      height: "auto",
+      x: targetX,
+      y: targetY,
+      scale: scaleRatio,
+      opacity: 1,
+      filter: navIsDark ? "brightness(0) invert(1)" : "none",
+      mixBlendMode: navIsDark ? "normal" : "multiply",
+    });
+
+    morphTween = gsap.timeline({ defaults: { overwrite: "auto" } });
+
+    morphTween
+      .to(navLogo, { opacity: 0, duration: 0.12, ease: "power1.out" }, 0)
+      .to(
+        transit,
+        {
+          x: 0,
+          y: 0,
+          scale: 1,
+          ease: "power2.out",
+          duration: 0.45,
+        },
+        0,
+      )
+      .to(heroLogo, { opacity: 1, duration: 0.16, ease: "power1.out" }, 0.3)
+      .to(transit, { opacity: 0, duration: 0.1, ease: "power1.out" }, 0.34)
+      .eventCallback("onComplete", () => {
+        gsap.set(transit, {
+          display: "none",
+          clearProps:
+            "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode",
+        });
+        applyDark(false);
+      });
+  }
+
+  function morphToNavbar() {
+    if (hasMorphed) return;
+    hasMorphed = true;
+
+    const hRect = heroLogo.getBoundingClientRect();
+    const nRect = navLogo.getBoundingClientRect();
+    const scaleRatio = nRect.width / hRect.width;
+    const targetX = nRect.left - hRect.left;
+    const targetY = nRect.top - hRect.top;
+
     gsap.set(transit, {
       display: "block",
       left: hRect.left,
@@ -227,57 +299,53 @@ const navLinks = [
       y: 0,
       scale: 1,
       opacity: 1,
+      filter: "none",
+      mixBlendMode: "multiply",
     });
 
-    // Hero logo hidden (transit is our visual stand-in)
-    gsap.set(heroLogo, { opacity: 0 });
-    gsap.set(navLogo, { opacity: 0 });
+    gsap.to(heroLogo, { opacity: 0, duration: 0.12, ease: "power1.out" });
+    applyDark(true);
 
-    // ── 3. GSAP ScrollTrigger timeline ──────────────────────────────────────
+    morphTween?.kill();
+    morphTween = gsap.timeline({ defaults: { overwrite: "auto" } });
+
+    morphTween
+      .to(transit, {
+        x: targetX,
+        y: targetY,
+        scale: scaleRatio,
+        transformOrigin: "top left",
+        ease: "power3.out",
+        duration: 0.55,
+      })
+      .to(transit, { opacity: 0, duration: 0.12, ease: "power1.out" }, "-=0.12")
+      .to(navLogo, { opacity: 1, duration: 0.16, ease: "power1.out" }, "-=0.06")
+      .eventCallback("onComplete", () => {
+        transit.style.display = "none";
+      });
+  }
+
+  // ─── Core animation init (called on load + resize) ───────────────────────────
+  function initMorph() {
+    // Kill any previous ScrollTrigger instances to avoid stacking on resize
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+
+    resetToTopState(true);
+
     const heroSection = document.getElementById("home")!;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: heroSection,
-        start: "top top",
-        end: "55% top", // morph completes when hero is 55% scrolled past
-        scrub: 1, // smooth 1-second lag behind scroll
-        onUpdate: (self) => {
-          // Navbar dark/light: switch at 15% scroll progress through hero
-          applyDark(self.progress > 0.15);
-        },
-        onRefresh: () => {
-          // On ScrollTrigger refresh (e.g. after resize), re-read nav logo position
-          const freshNavRect = navLogo.getBoundingClientRect();
-          const freshHeroRect = heroLogo.getBoundingClientRect();
-          const freshScale = freshNavRect.width / freshHeroRect.width;
-          const freshX = freshNavRect.left - freshHeroRect.left;
-          const freshY = freshNavRect.top - freshHeroRect.top;
-          tl.vars.scrollTrigger!; // keep reference alive
-        },
-      },
+    ScrollTrigger.create({
+      trigger: heroSection,
+      start: "top+=20 top",
+      end: "max",
+      onEnter: morphToNavbar,
+      onEnterBack: morphToNavbar,
+      onLeaveBack: morphBackToHero,
     });
 
-    tl
-      // Transit logo: fly from hero → navbar using pure transforms (NO layout props)
-      .to(
-        transit,
-        {
-          x: targetX,
-          y: targetY,
-          scale: scaleRatio,
-          transformOrigin: "top left",
-          ease: "power2.inOut",
-          duration: 1,
-        },
-        0,
-      )
-      // Transit fades out just before arriving so nav logo takes over cleanly
-      .to(transit, { opacity: 0, duration: 0.15 }, 0.82)
-      // Nav logo fades in at 80% of the timeline
-      .to(navLogo, { opacity: 1, duration: 0.2, ease: "power1.in" }, 0.8);
-
-    return tl;
+    if (window.scrollY > 20) {
+      morphToNavbar();
+    }
   }
 
   // ─── Wait for images to load so getBoundingClientRect is accurate ─────────────
@@ -292,10 +360,6 @@ const navLinks = [
   window.addEventListener("resize", () => {
     clearTimeout(_resizeTimer);
     _resizeTimer = setTimeout(() => {
-      // Reset element states before re-initialising
-      gsap.set(transit, { x: 0, y: 0, scale: 1, opacity: 1 });
-      gsap.set(heroLogo, { opacity: 0 });
-      gsap.set(navLogo, { opacity: 0 });
       initMorph();
       ScrollTrigger.refresh();
     }, 200);
@@ -314,15 +378,13 @@ const navLinks = [
 
   // ─── Portal button hover ──────────────────────────────────────────────────
   portalBtn.addEventListener("mouseenter", () => {
-    const isDark = window.scrollY > 60;
-    portalBtn.style.background = isDark ? "white" : "#8B0404";
-    portalBtn.style.color = isDark ? "#8B0404" : "white";
+    portalBtn.style.background = navIsDark ? "white" : "#8B0404";
+    portalBtn.style.color = navIsDark ? "#8B0404" : "white";
   });
   portalBtn.addEventListener("mouseleave", () => {
     portalBtn.style.background = "transparent";
-    const isDark = window.scrollY > 60;
-    portalBtn.style.borderColor = isDark ? "white" : "#8B0404";
-    portalBtn.style.color = isDark ? "white" : "#8B0404";
+    portalBtn.style.borderColor = navIsDark ? "white" : "#8B0404";
+    portalBtn.style.color = navIsDark ? "white" : "#8B0404";
   });
 
   // ─── Mobile menu ─────────────────────────────────────────────────────────
