@@ -1,4 +1,7 @@
 ---
+import { Image } from "astro:assets";
+import logoFinal2 from "../assets/logo_final2.png";
+
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "About", href: "#about" },
@@ -14,21 +17,21 @@ const navLinks = [
 >
   <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
     <!-- Navbar logo — real SEO logo with descriptive alt and link.
-         Starts opacity:0, GSAP fades it in at end of morph. -->
+         Starts opacity:0, GSAP fades it in at end of morph.
+         Astro Image: auto-optimized, 300w (2x retina for ~150px display). -->
     <a
       href="#home"
       class="flex items-center group"
       aria-label="Visionary Property Management of Florida LLC"
     >
-      <img
-        src="/logo.png"
+      <Image
+        src={logoFinal2}
         alt="Visionary Property Management of Florida LLC"
         id="nav-logo"
-        width="300"
-        height="200"
+        width={300}
         class="object-contain transition-transform duration-300 group-hover:scale-105"
-        style="opacity: 0; will-change: opacity, filter; mix-blend-mode: multiply; height: 100px; width: auto; max-width: 180px;"
-        loading="eager"
+        style="opacity: 0; will-change: opacity, filter; mix-blend-mode: multiply; width: auto; max-width: 150px;"
+        loading="lazy"
         decoding="async"
       />
     </a>
@@ -127,23 +130,17 @@ const navLinks = [
   GSAP animates it from hero position → navbar position using
   x, y, scale (transform-only = no layout recalculation, CLS = 0).
   aria-hidden + alt="" so screen readers never read it.
+  Astro Image: 1400w for enough resolution at hero display size.
 -->
-<img
-  id="transit-logo"
-  src="/logo.png"
+<Image
+  src={logoFinal2}
   alt=""
+  id="transit-logo"
+  width={1400}
+  style="display: none; position: fixed; z-index: 60; pointer-events: none; object-fit: contain; will-change: transform, opacity; transform-origin: top left; mix-blend-mode: multiply;"
   aria-hidden="true"
   role="presentation"
-  style="
-    display: none;
-    position: fixed;
-    z-index: 60;
-    pointer-events: none;
-    object-fit: contain;
-    will-change: transform, opacity;
-    transform-origin: top left;
-    mix-blend-mode: multiply;
-  "
+  loading="lazy"
 />
 
 <script>
@@ -163,6 +160,7 @@ const navLinks = [
   let navIsDark = false;
   let morphTween: gsap.core.Timeline | null = null;
   let hasMorphed = false;
+  let isAnimating = false;
 
   // ─── Dark/light navbar UI helpers ────────────────────────────────────────────
   function applyDark(isDark: boolean) {
@@ -206,17 +204,18 @@ const navLinks = [
 
   function resetToTopState(immediate = true) {
     hasMorphed = false;
+    isAnimating = false;
     morphTween?.kill();
     morphTween = null;
     gsap.killTweensOf([heroLogo, navLogo, transit]);
 
     if (immediate) {
-      gsap.set(heroLogo, { opacity: 1 });
-      gsap.set(navLogo, { opacity: 0 });
+      gsap.set(heroLogo, { opacity: 1, clearProps: "transform" });
+      gsap.set(navLogo, { opacity: 0, clearProps: "transform" });
       gsap.set(transit, {
         display: "none",
         clearProps:
-          "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode",
+          "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode,transform,transformOrigin",
       });
       applyDark(false);
     }
@@ -227,18 +226,31 @@ const navLinks = [
       resetToTopState(true);
       return;
     }
+    if (isAnimating) {
+      // Kill any in-progress animation before starting reverse
+      morphTween?.kill();
+      morphTween = null;
+      gsap.killTweensOf([heroLogo, navLogo, transit]);
+    }
 
     hasMorphed = false;
-    morphTween?.kill();
-    morphTween = null;
-    gsap.killTweensOf([heroLogo, navLogo, transit]);
+    isAnimating = true;
 
     const hRect = heroLogo.getBoundingClientRect();
     const nRect = navLogo.getBoundingClientRect();
+
+    // Guard against invalid dimensions (image not loaded or element hidden)
+    if (hRect.width <= 0 || nRect.width <= 0) {
+      resetToTopState(true);
+      return;
+    }
+
     const scaleRatio = nRect.width / hRect.width;
     const targetX = nRect.left - hRect.left;
     const targetY = nRect.top - hRect.top;
 
+    // Clean any stale transforms before positioning
+    gsap.set(transit, { clearProps: "transform" });
     gsap.set(transit, {
       display: "block",
       left: hRect.left,
@@ -248,12 +260,24 @@ const navLinks = [
       x: targetX,
       y: targetY,
       scale: scaleRatio,
+      transformOrigin: "top left",
       opacity: 1,
       filter: navIsDark ? "brightness(0) invert(1)" : "none",
       mixBlendMode: navIsDark ? "normal" : "multiply",
     });
 
-    morphTween = gsap.timeline({ defaults: { overwrite: "auto" } });
+    morphTween = gsap.timeline({
+      defaults: { overwrite: "auto" },
+      onInterrupt: () => {
+        // Cleanup if ScrollTrigger interrupts (e.g. fast scroll reversal)
+        isAnimating = false;
+        gsap.set(transit, {
+          display: "none",
+          clearProps:
+            "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode,transform,transformOrigin",
+        });
+      },
+    });
 
     morphTween
       .to(navLogo, { opacity: 0, duration: 0.12, ease: "power1.out" }, 0)
@@ -263,6 +287,7 @@ const navLinks = [
           x: 0,
           y: 0,
           scale: 1,
+          transformOrigin: "top left",
           ease: "power2.out",
           duration: 0.45,
         },
@@ -271,25 +296,34 @@ const navLinks = [
       .to(heroLogo, { opacity: 1, duration: 0.16, ease: "power1.out" }, 0.3)
       .to(transit, { opacity: 0, duration: 0.1, ease: "power1.out" }, 0.34)
       .eventCallback("onComplete", () => {
+        isAnimating = false;
         gsap.set(transit, {
           display: "none",
           clearProps:
-            "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode",
+            "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode,transform,transformOrigin",
         });
         applyDark(false);
       });
   }
 
   function morphToNavbar() {
-    if (hasMorphed) return;
-    hasMorphed = true;
+    if (hasMorphed || isAnimating) return;
 
     const hRect = heroLogo.getBoundingClientRect();
     const nRect = navLogo.getBoundingClientRect();
+
+    // Guard against invalid dimensions (image not loaded or element hidden)
+    if (hRect.width <= 0 || nRect.width <= 0) return;
+
+    hasMorphed = true;
+    isAnimating = true;
+
     const scaleRatio = nRect.width / hRect.width;
     const targetX = nRect.left - hRect.left;
     const targetY = nRect.top - hRect.top;
 
+    // Clean any stale transforms before positioning
+    gsap.set(transit, { clearProps: "transform" });
     gsap.set(transit, {
       display: "block",
       left: hRect.left,
@@ -299,6 +333,7 @@ const navLinks = [
       x: 0,
       y: 0,
       scale: 1,
+      transformOrigin: "top left",
       opacity: 1,
       filter: "none",
       mixBlendMode: "multiply",
@@ -308,7 +343,17 @@ const navLinks = [
     applyDark(true);
 
     morphTween?.kill();
-    morphTween = gsap.timeline({ defaults: { overwrite: "auto" } });
+    morphTween = gsap.timeline({
+      defaults: { overwrite: "auto" },
+      onInterrupt: () => {
+        isAnimating = false;
+        gsap.set(transit, {
+          display: "none",
+          clearProps:
+            "left,top,width,height,x,y,scale,opacity,filter,mixBlendMode,transform,transformOrigin",
+        });
+      },
+    });
 
     morphTween
       .to(transit, {
@@ -322,6 +367,7 @@ const navLinks = [
       .to(transit, { opacity: 0, duration: 0.12, ease: "power1.out" }, "-=0.12")
       .to(navLogo, { opacity: 1, duration: 0.16, ease: "power1.out" }, "-=0.06")
       .eventCallback("onComplete", () => {
+        isAnimating = false;
         transit.style.display = "none";
       });
   }
@@ -330,6 +376,10 @@ const navLinks = [
   function initMorph() {
     // Kill any previous ScrollTrigger instances to avoid stacking on resize
     ScrollTrigger.getAll().forEach((t) => t.kill());
+    // Kill any in-progress animation and reset state
+    morphTween?.kill();
+    morphTween = null;
+    gsap.killTweensOf([heroLogo, navLogo, transit]);
 
     resetToTopState(true);
 

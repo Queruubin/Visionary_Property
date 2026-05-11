@@ -1,6 +1,8 @@
 ---
-
+import { Picture } from "astro:assets";
+import logoFinal2 from "../assets/logo_final2.png";
 ---
+
 
 <section
   id="home"
@@ -36,20 +38,23 @@
     class="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center gap-8 pt-28 pb-32"
   >
     <!-- HERO LOGO — decorative/visual; aria-hidden so screen readers don't double-read it.
-         The real SEO logo with alt + link lives in the navbar. -->
+         The real SEO logo with alt + link lives in the navbar.
+         Astro Picture: auto-generates responsive srcset (mobile 360w → desktop 1400w),
+         WebP/AVIF formats, fetchpriority=high for LCP, sync decoding. -->
     <div class="flex justify-center" id="hero-logo-wrap">
-      <img
-        id="hero-logo-img"
-        src="/logo.png"
+      <Picture
+        src={logoFinal2}
         alt=""
-        aria-hidden="true"
-        role="presentation"
-        width="500"
-        height="300"
+        widths={[360, 640, 750, 1080, 1400]}
+        sizes="(max-width: 768px) calc(100vw - 48px), 700px"
+        id="hero-logo-img"
         class="w-[700px] md:w-[700px] object-contain"
         style="mix-blend-mode: multiply; will-change: opacity;"
         loading="eager"
-        decoding="async"
+        decoding="sync"
+        fetchpriority="high"
+        aria-hidden="true"
+        role="presentation"
       />
     </div>
 
